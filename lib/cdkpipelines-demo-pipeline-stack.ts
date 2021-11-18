@@ -1,7 +1,7 @@
 import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core'
 import { CodePipeline, CodePipelineSource, ShellStep } from '@aws-cdk/pipelines'
 import { CdkpipelinesDemoStage } from './cdkpipelines-demo-stage'
-
+import { AmplifyStage } from './amplify-demo-stage'
 /**
  * The stack that defines the application pipeline
  */
@@ -21,7 +21,12 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
 				}),
 
 				// Install dependencies, build and run cdk synth
-				commands: ['npm ci', 'npm run build', 'npx cdk synth'],
+				commands: [
+					'npm ci',
+					'npm run build',
+					'npx cdk synth',
+					'npm i -g @aws-amplify/cli',
+				],
 			}),
 		})
 
@@ -32,5 +37,6 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
 				env: { account: '521776702104', region: 'us-east-1' },
 			})
 		)
+		pipeline.addStage(new AmplifyStage(this, 'amplifyStage'))
 	}
 }

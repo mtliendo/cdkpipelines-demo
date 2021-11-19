@@ -10,8 +10,6 @@ import * as path from 'path'
 import * as cdk from '@aws-cdk/core'
 
 export class AmplifyStage extends Stage {
-	public readonly rootStackName: string
-
 	constructor(scope: Construct, id: string, props?: StageProps) {
 		super(scope, id, props)
 
@@ -23,7 +21,5 @@ export class AmplifyStage extends Stage {
 				path: path.resolve(__dirname, 'amplify-export-lightshow'),
 			}
 		)
-
-		this.rootStackName = amplifyStack.rootStack.stackName
 	}
 }

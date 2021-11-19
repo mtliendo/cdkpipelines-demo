@@ -1,7 +1,7 @@
 import { Construct, SecretValue, Stack, StackProps } from '@aws-cdk/core'
 import { CodePipeline, CodePipelineSource, ShellStep } from '@aws-cdk/pipelines'
 import { CdkpipelinesDemoStage } from './cdkpipelines-demo-stage'
-import { AmplifyStage } from './amplify-demo-stage'
+
 /**
  * The stack that defines the application pipeline
  */
@@ -30,6 +30,12 @@ export class CdkpipelinesDemoPipelineStack extends Stack {
 			}),
 		})
 
-		pipeline.addStage(new AmplifyStage(this, 'amplifyStage'))
+		// This is where we add the application stages
+		// ...
+		pipeline.addStage(
+			new CdkpipelinesDemoStage(this, 'PreProd', {
+				env: { account: '521776702104', region: 'us-east-1' },
+			})
+		)
 	}
 }
